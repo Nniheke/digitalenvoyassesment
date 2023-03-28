@@ -1,2 +1,2 @@
-# digitalenvoyassesment
+# digitalenvoyassessment
 Digital Envoy Assessment
