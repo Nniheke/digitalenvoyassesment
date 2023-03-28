@@ -1,4 +1,4 @@
-package com.example.digitalenvoyassesment
+package com.example.digitalenvoyassessment
 
 import org.junit.Test
 

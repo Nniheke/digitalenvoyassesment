@@ -1,4 +1,4 @@
-package com.example.digitalenvoyassesment
+package com.example.digitalenvoyassessment
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
