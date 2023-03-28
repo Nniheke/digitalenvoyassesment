@@ -19,9 +19,8 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.withContext
 
-// I chose CoroutineWorker because it provides interop with Kotlin Coroutines and allows us to call suspend functions in doWork
-// I chose callBackFlow as my return method because it allows elements to be produced by code that is running in a different context or concurrently &
-// also returns a cold flow, so that block is called every time a terminal operator is applied to the flow & is also ensures thread-safety and context preservation
+// I chose CoroutineWorker because it provides interop with Kotlin Coroutines and allows us to call suspend functions in doWork, I chose callBackFlow as my return method because it allows elements callBackFlow as my return method because it allows elements
+// in a different context or concurrently & also returns a cold flow, so that block is called every time a terminal operator is applied to the flow and ensures thread-safety as well as context preservation
 
 class LocationWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
