@@ -13,7 +13,6 @@ import com.example.digitalenvoyassessment.clients.DefaultLocationClient
 import com.example.digitalenvoyassessment.clients.LocationClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -30,12 +29,13 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters) :
         LocationServices.getFusedLocationProviderClient(applicationContext)
     )
 
+    // gets location updates then transforms them to a list of Location objects to be passed to the toast function
     override suspend fun doWork(): Result {
         return try {
             locationClient.getLocationUpdates(5000L)
                 .catch { e -> e.printStackTrace() }
                 .take(3).apply {
-                    toastLocations(this)
+                    toastLocations(this.toList())
                 }
             return Result.success()
         } catch (throwable: Throwable) {
@@ -44,14 +44,14 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    // Takes param locations as a flow and transforms them to a list of Location objects then displays as a custom toast message
-    private suspend fun toastLocations(locations: Flow<Location>) {
+    // Takes param locations as a list of Location objects then displays them as a custom toast message
+    private suspend fun toastLocations(locations: List<Location>) {
         withContext(Dispatchers.Main) {
             val inflater = LayoutInflater.from(applicationContext)
             val layout = inflater.inflate(R.layout.custom_long_toast, null)
             val textView =
                 layout.findViewById<TextView>(R.id.textview_toast_message)
-            textView.text = locations.toList().toString()
+            textView.text = locations.toString()
             val toast = Toast(applicationContext)
             toast.duration = Toast.LENGTH_LONG
             toast.view = layout
