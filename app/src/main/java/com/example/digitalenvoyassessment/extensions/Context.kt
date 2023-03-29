@@ -1,4 +1,4 @@
-package com.example.digitalenvoyassessment.extentions
+package com.example.digitalenvoyassessment.extensions
 
 import android.content.Context
 import android.content.pm.PackageManager
