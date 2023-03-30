@@ -24,8 +24,7 @@ class DigitalEnvoyApplication : Application() {
     }
 
     private fun checkPermission() {
-        val hasPermission = hasLocationPermission()
-        permissionState.value = hasPermission
+        permissionState.value = hasLocationPermission()
     }
 
     fun startLocationWorker() {
