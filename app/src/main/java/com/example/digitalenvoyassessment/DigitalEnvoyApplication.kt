@@ -20,13 +20,18 @@ class DigitalEnvoyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        checkPermission()
+        checkPermissionsStartWorker()
     }
 
-    private fun checkPermission() {
+    //Checks if permissions are granted and starts location worker
+    private fun checkPermissionsStartWorker() {
         permissionState.value = hasLocationPermission()
+        if(permissionState.value == true){
+            startLocationWorker()
+        }
     }
 
+    //Sets periodic work builder config and starts work manager instance
     fun startLocationWorker() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
