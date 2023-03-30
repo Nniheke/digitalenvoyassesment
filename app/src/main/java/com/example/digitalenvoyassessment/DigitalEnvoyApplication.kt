@@ -14,6 +14,7 @@ class DigitalEnvoyApplication : Application() {
     // I selected PeriodicWorkRequest because it's a workRequest for repeating work.This work executes multiple times until it is cancelled.
 
     var permissionState = MutableLiveData<Boolean>()
+
     override fun onCreate() {
         super.onCreate()
         checkPermission()

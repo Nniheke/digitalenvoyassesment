@@ -15,7 +15,7 @@ import androidx.core.app.ActivityCompat
 import com.example.digitalenvoyassesment.R
 
 class MainActivity : AppCompatActivity() {
-    lateinit var app: DigitalEnvoyApplication
+    private lateinit var app: DigitalEnvoyApplication
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "$clickableText has been clicked!", Toast.LENGTH_SHORT).show()
         }
         app = application as DigitalEnvoyApplication
+
         app.permissionState.observe(this) { hasPermission ->
             if (!hasPermission) {
                 ActivityCompat.requestPermissions(
