@@ -13,9 +13,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.digitalenvoyassesment.R
-import com.example.digitalenvoyassessment.extensions.hasLocationPermission
 
 class MainActivity : AppCompatActivity() {
+    lateinit var app: DigitalEnvoyApplication
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,16 +26,20 @@ class MainActivity : AppCompatActivity() {
         setClickableText(textView, textView.text as String, clickableText) {
             Toast.makeText(this, "$clickableText has been clicked!", Toast.LENGTH_SHORT).show()
         }
-
-        if (!hasLocationPermission()) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                PERMISSION_REQUEST_CODE
-            )
+        app = application as DigitalEnvoyApplication
+        app.permissionState.observe(this) { hasPermission ->
+            if (!hasPermission) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    ),
+                    PERMISSION_REQUEST_CODE
+                )
+            } else {
+                app.startLocationWorker()
+            }
         }
     }
 
@@ -84,8 +88,10 @@ class MainActivity : AppCompatActivity() {
             PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                )
-                    return
+                ) {
+                    app.startLocationWorker()
+                }
+                return
             }
         }
     }
