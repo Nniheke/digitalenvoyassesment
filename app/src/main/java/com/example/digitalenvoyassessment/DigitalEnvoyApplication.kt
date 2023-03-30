@@ -1,6 +1,7 @@
 package com.example.digitalenvoyassessment
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.*
 import com.example.digitalenvoyassesment.BuildConfig
@@ -13,7 +14,9 @@ class DigitalEnvoyApplication : Application() {
     //I selected WorkManager because it is the recommended library for persistent work & scheduled work is guaranteed to execute.
     // I selected PeriodicWorkRequest because it's a workRequest for repeating work.This work executes multiple times until it is cancelled.
 
-    var permissionState = MutableLiveData<Boolean>()
+    private val permissionState = MutableLiveData<Boolean>()
+
+    val _permissonState : LiveData<Boolean> = permissionState
 
     override fun onCreate() {
         super.onCreate()

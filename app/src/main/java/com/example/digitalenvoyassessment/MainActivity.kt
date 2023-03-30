@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
         app = application as DigitalEnvoyApplication
 
-        app.permissionState.observe(this) { hasPermission ->
+        app._permissonState.observe(this) { hasPermission ->
             if (!hasPermission) {
                 ActivityCompat.requestPermissions(
                     this,
